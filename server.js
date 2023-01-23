@@ -3,8 +3,6 @@ const path = require('path');
 
 const routes = require('./routes/index');
 
-const PORT = 3001;
-
 const app = express();
 
 app.use(express.urlencoded({ extended: true }));
@@ -22,6 +20,6 @@ app.get('/notes', (req, res) =>
     res.sendFile(path.join(__dirname, '/public/notes.html'))
 );
 
-app.listen(PORT, () =>
-    console.log(`Listening on port http://localhost:${PORT}`)
+app.listen(process.env.PORT || 5000, () =>
+    console.log(`Listening on port http://0.0.0.0:${process.env.PORT}`)
 );
