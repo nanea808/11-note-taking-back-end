@@ -1,17 +1,22 @@
 const fs = require('fs');
 const util = require('util');
 
+// Promise version of fs.ReadFile
 const readFromFile = util.promisify(fs.readFile);
 
-// const readFromFile = (file) => {
-//     fs.readFile(file, 'utf8', (err, data) => {
-//         if (err) {
-//             console.error(err);
-//         } else {
-//             console.log(data);
-//             return data;
-//         }
-//     });
-// }
+// Accepts content and file and appends content to the given path
+const readAndAppend = (content, file) => {
+    fs.readFile(file, 'utf8', (err, data) => {
+        if (err) {
+            console.error(err);
+        } else {
+            const parsedData = JSON.parse(data);
+            parsedData.push(content);
+            fs.writeFile(file, parsedData, (err) =>
+                err ? console.error(err) : console.info(`\nData saved!`));
+            
+        }
+    });
+}
 
-module.exports = { readFromFile }
+module.exports = { readFromFile, readAndAppend }
